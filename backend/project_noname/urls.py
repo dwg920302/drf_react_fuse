@@ -15,8 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .common.views import Connection
+from django.conf.urls import url, include
+from rest_framework import routers
+from common.views import Connection
+from member.views import Auth
+
+
+router = routers.DefaultRouter()
 
 urlpatterns = [
-    path('connection', Connection.as_view())
+    path('connection', Connection.as_view()),
+    path('blog', include('blog.urls')),
+    url(r'^member/', Auth.as_view()),
+
+
 ]

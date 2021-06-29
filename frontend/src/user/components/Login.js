@@ -16,6 +16,8 @@ const Login = () => {
     <input type="password" placeholder="Enter Password" name="psw" required/>
         
     <button type="submit">Login</button>
+  </div>
+  <div>
     <label>
       <input type="checkbox" checked="checked" name="remember"/> Remember me
     </label>
