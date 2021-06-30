@@ -26,16 +26,22 @@ class Members(APIView):
 class Member(APIView):
     # Get에다 로그인 기능 만들기
     # 로그인은 react(frontend)가 기억하고 있어야 함. 그래야 무상태가 됨
-    def get(self, request):
-        ic('Member.get에 들어왔음')
+    def post(self, request):  # get으로 하면 ㅄ이라 data를 못 읽어옴
         data = request.data['body']
-        ic(data)
+        [username, password] = [data['username'], data['password']]
+        ic(f'{data} / {username} / {password}')
         usernames = [member.username for member in MemberVO.objects.all()]
-        ic(usernames)
-
-
-        # 대치
-        return Response(usernames)
+        if usernames.count(username) > 0:
+            ic('계정 있음')
+            obj = self.get_object(username)
+            if obj.password == password:
+                return Response({'result': '로그인 성공'})
+            else:
+                return Response({'result': '로그인 실패 : 아이디 혹은 비밀번호 틀림)'})
+            # if 패스워드 == 받아온 패스워드: 로그인 성공
+        else:
+            ic('계정 없음')
+            return Response({'result': '로그인 실패 : 아이디 혹은 비밀번호 틀림)'})
 
     def get_object(self, pk):
         try:

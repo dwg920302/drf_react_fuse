@@ -28,7 +28,7 @@ const Login = () => {
 
     userLogin(loginRequest)
     .then(res => {
-      alert(`로그인 성공 : ${res.data.result}`)
+      alert(`${res.data.result}`)
     })
     .catch(err => {
       alert(`로그인 실패 : ${err}`)
