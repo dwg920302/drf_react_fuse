@@ -8,7 +8,7 @@ from django.db import models
 # email max 무한
 
 
-class Member(models.Model):
+class MemberVO(models.Model):
     username = models.CharField(primary_key=True, max_length=10)
     password = models.CharField(max_length=10)
     name = models.TextField()

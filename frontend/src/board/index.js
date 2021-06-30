@@ -1,0 +1,5 @@
+export { default as PostWrite } from 'board/container/PostWrite'
+export { default as PostList } from 'board/container/PostList'
+export { default as PostDelete } from 'board/components/PostDelete'
+export { default as PostRetrieve } from 'board/components/PostRetrieve'
+export { default as PostUpdate } from 'board/components/PostUpdate'

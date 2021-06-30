@@ -1,7 +1,13 @@
 import axios from 'axios'
 
 const SERVER = 'http://127.0.0.1:8000/'
+const headers = {'Content-Type': 'application/json'}
+const headers_xml = {'Content-Type': 'application/xml'}
 
-export const userSignup = signupRequest => axios.get(`${SERVER}member/signup`, signupRequest)
+export const userSignup = body => axios.post(`${SERVER}member/signup`, {headers, body})
+export const userLogin = body => axios.get(`${SERVER}member/login`, {headers, body})
 
-// 임시조치. 나중에 post로 바꿔줘야 함.
+export const postWrite = body => axios.post(`${SERVER}post/register`, {headers: headers_xml, body})
+
+
+// {headers, body} == {headers: headers, body: body}

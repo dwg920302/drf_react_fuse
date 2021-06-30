@@ -46,8 +46,8 @@ const SignUp = () => {
   }
 
     return (<>
-    // 아래 form의 method가 원래는 post가 되어야 함
-    <form onSubmit={handleSubmit} method="get" style={{border:"1px solid #ccc"}}>
+    <div className="signup">
+    <form onSubmit={handleSubmit} method="post" style={{border:"1px solid #ccc"}}>
   <div className="container">
     <h1>Sign Up</h1>
     <p>Please fill in this form to create an account.</p>
@@ -77,6 +77,7 @@ const SignUp = () => {
     </div>
   </div>
 </form>
+</div>
 </>)
 }
 

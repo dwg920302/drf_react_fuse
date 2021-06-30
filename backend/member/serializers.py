@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from member.models import Member
+from member.models import MemberVO as member
 
 
 class MemberSerializer(serializers.Serializer):
@@ -11,14 +11,14 @@ class MemberSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
     class Meta:
-        model = Member
+        model = member
         fields = ['username', 'password', 'name', 'email']
 
     def create(self, validated_data):
         """
         Create and return a new `Snippet` instance, given the validated data.
         """
-        return Member.objects.create(**validated_data)
+        return member.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         """

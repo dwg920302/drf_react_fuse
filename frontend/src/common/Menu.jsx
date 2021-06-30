@@ -24,23 +24,23 @@ export const ItemMenu = () => (<nav>
 </nav>
 
 )
-export const BlogMenu = () => (<nav>
+export const BoardMenu = () => (<nav>
     <ol>
-        <li><Link to='/post-list'>게시글 목록</Link></li>
-        <li><Link to='/post-register'>게시글 쓰기</Link></li>
-        <li><Link to='/post-retrieve'>게시글 조회</Link></li>
-        <li><Link to='/post-update'>게시글 수정</Link></li>
-        <li><Link to='/post-delete'>게시글 삭제</Link></li>
+        <li><Link to='/board/list'>게시글 목록</Link></li>
+        <li><Link to='/board/register'>게시글 쓰기</Link></li>
+        <li><Link to='/board/retrieve'>게시글 조회</Link></li>
+        <li><Link to='/board/update'>게시글 수정</Link></li>
+        <li><Link to='/board/delete'>게시글 삭제</Link></li>
     </ol>
 </nav>
 
 )
 export const StockMenu = () => (<nav>
     <ol>
-        <li><Link to='/stock-list'>게시글 목록</Link></li>
-        <li><Link to='/stock-write'>게시글 쓰기</Link></li>
-        <li><Link to='/stock-read'>게시글 읽기</Link></li>
-        <li><Link to='/stock-remove'>회원정보삭제</Link></li>
+        <li><Link to='/stock-list'>[무언가] 목록</Link></li>
+        <li><Link to='/stock-write'>[무언가] 쓰기</Link></li>
+        <li><Link to='/stock-read'>[무언가] 읽기</Link></li>
+        <li><Link to='/stock-remove'>[무언가] 삭제</Link></li>
     </ol>
 </nav>
 
