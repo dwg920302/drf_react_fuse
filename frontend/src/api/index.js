@@ -8,6 +8,7 @@ export const userSignup = body => axios.post(`${SERVER}member/signup`, {headers,
 export const userLogin = body => axios.post(`${SERVER}member/login`, {headers, body})
 
 export const postWrite = body => axios.post(`${SERVER}post/register`, {headers: headers_xml, body})
+export const postList = () => axios.get(`${SERVER}post/list`, headers)
 
 
 // {headers, body} == {headers: headers, body: body}
