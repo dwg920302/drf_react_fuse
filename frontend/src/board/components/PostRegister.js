@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
-import './PostWrite.css'
 import {postWrite} from 'api'
 import {Button} from '@material-ui/core'
 
-const PostWrite = () => {
+const PostRegister = () => {
 
     const [post, setPost] = useState({
         title: '',
@@ -67,4 +66,4 @@ const PostWrite = () => {
 </>)
 }
 
-export default PostWrite
+export default PostRegister

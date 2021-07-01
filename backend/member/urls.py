@@ -1,7 +1,12 @@
+from member import views
 from django.conf.urls import url
-from .views import Members, Member
+
+from icecream import ic
+
+ic('Inside Member')
 
 urlpatterns = [
-    url('signup', Members.as_view()),
-    url('login', Member.as_view()),
+    url(r'^register', views.members),
+    url(r'^list', views.members),
+    url(r'^login', views.member),
 ]

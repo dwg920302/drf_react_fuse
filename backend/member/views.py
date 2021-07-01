@@ -1,80 +1,68 @@
-from django.shortcuts import render
-from django.urls import path
-from rest_framework.views import APIView
-from django.http import HttpResponse, JsonResponse, Http404
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
-from member.serializers import MemberSerializer
-from rest_framework.views import APIView
-from icecream import ic
+from django.http.response import JsonResponse
 from rest_framework.response import Response
+from rest_framework import status
+
+from rest_framework import serializers
 from .models import MemberVO
+from .serializers import MemberSerializer
+from rest_framework.decorators import api_view
+
+from icecream import ic
 
 
-class Members(APIView):
-    def post(self, request):
-        data = request.data['body']
-        ic(data)
-        serializer = MemberSerializer(data=data)
+@api_view(['GET', 'POST', 'DELETE'])
+def members(request):
+    if request.method == 'GET':
+        all_members = MemberVO.objects.all()
+        ic(all_members)
+        serializer = MemberSerializer(all_members, many=True)
+        return JsonResponse(serializer.data, safe=False)
+        # return Response(data=data, status=201)
+    elif request.method == 'POST':
+        # new_member = JSONParser().parse(request)
+        # new_member = new_member['body']
+        new_member = request.data['body']
+        ic(new_member)
+        serializer = MemberSerializer(data=new_member)
         if serializer.is_valid():
             serializer.save()
-            return Response({'result': f'Welcome, {serializer.data.get("name")}'}, status=201)
-        ic(serializer.errors)
-        return Response(serializer.errors, status=400)
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        serializer = MemberSerializer()
+        return JsonResponse(serializer.data, safe=False)
 
 
-class Member(APIView):
-    # Get에다 로그인 기능 만들기
-    # 로그인은 react(frontend)가 기억하고 있어야 함. 그래야 무상태가 됨
-    def post(self, request):  # get으로 하면 ㅄ이라 data를 못 읽어옴
-        data = request.data['body']
-        [pk, password] = [data['username'], data['password']]
-        db_res = self.get_object(pk)
-        if db_res.password == password:
-            return Response({'result': '로그인 성공'}, status=201)
-        return Response({'result': '로그인 실패 : 아이디 혹은 비밀번호 틀림)'}, status=104)
-            # if 패스워드 == 받아온 패스워드: 로그인 성공
-
-    def post_outdated(self, request):  # get으로 하면 ㅄ이라 data를 못 읽어옴
+@api_view(['GET', 'PUT', 'POST', 'DELETE'])
+def member(request):
+    ic('member')
+    if request.method == 'GET':
+        serializer = MemberSerializer()
+        return JsonResponse(serializer.data, safe=False)
+    elif request.method == 'PUT':
+        serializer = MemberSerializer()
+        return JsonResponse(serializer.data, safe=False)
+    elif request.method == 'POST':
         data = request.data['body']
         [username, password] = [data['username'], data['password']]
-        ic(f'{data} / {username} / {password}')
         usernames = [member.username for member in MemberVO.objects.all()]
         if usernames.count(username) > 0:
-            ic('계정 있음')
-            obj = self.get_object(username)
+            obj = get_object(username)
             if obj.password == password:
-                return Response({'result': '로그인 성공'})
+                return JsonResponse({'result': '로그인 성공'})
             else:
-                return Response({'result': '로그인 실패 : 아이디 혹은 비밀번호 틀림)'})
+                return JsonResponse({'result': '로그인 실패 : 아이디 혹은 비밀번호 틀림)'})
             # if 패스워드 == 받아온 패스워드: 로그인 성공
         else:
             ic('계정 없음')
-            return Response({'result': '로그인 실패 : 아이디 혹은 비밀번호 틀림)'})
-
-    def get_object(self, pk):
-        try:
-            return MemberVO.objects.get(pk=pk)
-        except MemberVO.DoesNotExist:
-            return Response({'result': '로그인 실패 : 아이디 혹은 비밀번호 틀림)'}, status=104)
-
-
-'''@csrf_exempt
-def member_list(request):
-    """
-    List all code snippets, or create a new snippet.
-    """
-    if request.method == 'GET':
-        members = Member.objects.all()
-        serializer = MemberSerializer(members, many=True)
+            return JsonResponse({'result': '로그인 실패 : 아이디 혹은 비밀번호 틀림)'})
+    elif request.method == 'DELETE':
+        serializer = MemberSerializer()
         return JsonResponse(serializer.data, safe=False)
 
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = MemberSerializer(data=data)
-        if serializer.is_valid():  # 유효성 체크
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
 
-'''
+def get_object(pk):
+    try:
+        return MemberVO.objects.get(pk=pk)
+    except MemberVO.DoesNotExist:
+        return JsonResponse({'result': '로그인 실패 : 아이디 혹은 비밀번호 틀림)'}, status=104)

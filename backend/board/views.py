@@ -1,29 +1,30 @@
-from django.shortcuts import render
-from board.serializers import PostSerializer
-from rest_framework.views import APIView
-from icecream import ic
-from rest_framework.response import Response
+from django.http.response import JsonResponse
+from rest_framework import status
+
 from .models import PostVO
-import json
+from .serializers import PostSerializer
+from rest_framework.decorators import api_view
+
+from icecream import ic
 
 
-class Posts(APIView):
-    def post(self, request):
+@api_view(['GET', 'POST'])
+def posts(request):
+    if request.method == 'GET':
+        all_posts = PostVO.objects.values().all()
+        serializer = PostSerializer(all_posts, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    elif request.method == 'POST':
         data = request.data['body']
         ic(data)
         serializer = PostSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'result': f'Title = {serializer.data.get("title")}'}, status=201)
+            return JsonResponse(serializer.data, safe=False, status=201)
         ic(serializer.errors)
-        return Response(serializer.errors, status=400)
-
-    def get(self, request):
-        posts = PostVO.objects.values().all()
-        ic(posts)
-        return Response({'result': posts}, status=201)
+        return JsonResponse(serializer.errors, status=400)
 
 
-class Post(APIView):
-    def get(self, request):
-        pass
+@api_view(['GET', 'POST'])
+def post(request):
+    pass

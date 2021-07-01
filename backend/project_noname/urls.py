@@ -14,7 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.conf.urls import url, include
+from django.urls import path
 from rest_framework import routers
 from common.views import Connection
 from rest_framework import routers
@@ -23,9 +24,7 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     path('connection', Connection.as_view()),
-    # path('blog', include('blog.urls')),
-    path('member', include('member.urls')),
-    path('election', include('election.urls')),
-    path('post', include('board.urls')),
-
+    url(r'^api/post/', include('board.urls')),
+    url(r'^api/member/', include('member.urls')),
+    url(r'^adm/member/', include('member.urls')),
 ]

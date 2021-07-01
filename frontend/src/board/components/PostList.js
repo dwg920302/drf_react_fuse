@@ -8,7 +8,7 @@ const PostList = () => {
         alert('Getting All List of Posts')
         postList()
         .then(res => {
-            alert(`[Posts] ${JSON.stringify(res.data.result)}`)
+            alert(`[Posts] ${JSON.stringify(res.data)}`)
         })
         .catch(err => {
             alert(`Error : ${err}`)

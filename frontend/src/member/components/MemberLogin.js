@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { userLogin } from 'api'
+import { memberLogin } from 'api'
 import { useHistory } from 'react-router'
 
 
-const Login = () => {
+const MemberLogin = () => {
 
   const history = useHistory()
 
@@ -26,7 +26,7 @@ const Login = () => {
     alert(`Login Button Clicked. ${JSON.stringify({...loginInfo})}`)
     const loginRequest = {...loginInfo}
 
-    userLogin(loginRequest)
+    memberLogin(loginRequest)
     .then(res => {
       alert(`${res.data.result}`)
     })
@@ -74,4 +74,4 @@ const Login = () => {
     </>)
 }
 
-export default Login
+export default MemberLogin

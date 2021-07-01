@@ -1,10 +1,9 @@
 import React, {useState} from 'react'
-import './Signup.css'
 import {Button} from '@material-ui/core'
-import {userSignup} from 'api'
+import {memberRegister} from 'api'
 import {useHistory} from 'react-router'
 
-const SignUp = () => {
+const MemberRegister = () => {
 
   const history = useHistory() // 브라우저의 기록이라 생각하면 됨
 
@@ -29,7 +28,7 @@ const SignUp = () => {
     alert(`Send Button Clicked. ${JSON.stringify({...userInfo})}`)
     const signupRequest = {...userInfo}
 
-    userSignup(signupRequest)
+    memberRegister(signupRequest)
     .then(res => {
       alert(`회원가입 완료 : ${res.data.result}`)
       // alert(`회원가입 완료 : ${res.data}`)
@@ -81,4 +80,4 @@ const SignUp = () => {
 </>)
 }
 
-export default SignUp
+export default MemberRegister

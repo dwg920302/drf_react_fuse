@@ -1,7 +1,11 @@
+from board import views
 from django.conf.urls import url
-from .views import Posts
+
+from icecream import ic
+
+ic('Inside Board(Post)')
 
 urlpatterns = [
-    url('register', Posts.as_view()),
-    url('list', Posts.as_view()),
+    url('^register', views.posts),
+    url('^list', views.posts),
 ]

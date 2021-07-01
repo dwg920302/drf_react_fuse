@@ -82,8 +82,7 @@ export default function SearchAppBar() {
               <Link to='/home'>Home</Link>&nbsp;&nbsp;
               <Link to='/member'>Member</Link>&nbsp;&nbsp;
               <Link to='/item'>Item</Link>&nbsp;&nbsp;
-              <Link to='/board'>Blog</Link>&nbsp;&nbsp;
-              <Link to='/stock'>Stock</Link>
+              <Link to='/board'>Blog</Link>
             </Typography>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
