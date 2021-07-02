@@ -33,7 +33,7 @@ def members(request):
         return JsonResponse(serializer.data, safe=False)
 
 
-@api_view(['GET', 'PUT', 'POST', 'DELETE'])
+@api_view(['GET', 'PUT', 'POST', 'PATCH', 'DELETE'])
 def member(request):
     ic('member')
     if request.method == 'GET':
@@ -45,17 +45,23 @@ def member(request):
     elif request.method == 'POST':
         data = request.data['body']
         [username, password] = [data['username'], data['password']]
-        usernames = [member.username for member in MemberVO.objects.all()]
-        if usernames.count(username) > 0:
-            obj = get_object(username)
-            if obj.password == password:
-                return JsonResponse({'result': '로그인 성공'})
-            else:
-                return JsonResponse({'result': '로그인 실패 : 아이디 혹은 비밀번호 틀림)'})
-            # if 패스워드 == 받아온 패스워드: 로그인 성공
-        else:
-            ic('계정 없음')
-            return JsonResponse({'result': '로그인 실패 : 아이디 혹은 비밀번호 틀림)'})
+        obj = get_object(username)
+        if obj.password == password:
+            return JsonResponse({'result': '로그인 성공'})
+        return JsonResponse({'result': '로그인 실패 : 아이디 혹은 비밀번호 틀림'})
+    elif request.method == 'PATCH':
+        data = request.data['body']
+        username = data['username']
+        ic(data)
+        user = get_object(username)
+        ic(user)
+        # id를 프라이머리 키로 받아서 정보를 바꿈, 원래라면 절차가 달라야 함
+        # 여기에 Modify method 필요
+        serializer = MemberSerializer(data=data)
+        if serializer.is_valid():
+            serializer.update(user, data)
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
         serializer = MemberSerializer()
         return JsonResponse(serializer.data, safe=False)

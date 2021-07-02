@@ -7,6 +7,7 @@ const headers_xml = {'Content-Type': 'application/xml'}
 export const memberRegister = body => axios.post(`${SERVER}api/member/register`, {headers, body})
 export const memberLogin = body => axios.post(`${SERVER}api/member/login`, {headers, body})
 export const memberList = () => axios.get(`${SERVER}adm/member/list`, headers)
+export const memberModify = body => axios.patch(`${SERVER}api/member/modify`, {headers, body})
 
 export const postWrite = body => axios.post(`${SERVER}api/post/register`, {headers: headers_xml, body})
 export const postList = () => axios.get(`${SERVER}api/post/list`, headers)

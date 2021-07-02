@@ -42,7 +42,7 @@ const MemberList = () => {
             console.log(err)
         })
       }, [])
-
+    
   return (<>
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -74,6 +74,7 @@ const MemberList = () => {
 
     <form method='get'>
     <TableContainer component={Paper}>
+    <div className={classes.root}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -95,12 +96,11 @@ const MemberList = () => {
           )):
                 <h3>등록된 데이터가 없습니다.</h3>
           }
+            <Pagination defaultPage={1} count={5} boundaryCount={2} color="primary" />
         </TableBody>
       </Table>
+      </div>
     </TableContainer>
-    <div className={classes.root}>
-        <Pagination count={10} color="primary" />
-    </div>
     </form>
   </>);
 }
