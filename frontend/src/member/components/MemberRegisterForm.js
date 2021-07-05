@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
-import {Button} from '@material-ui/core'
 import {memberRegister} from 'api'
 import {useHistory} from 'react-router'
 
-const MemberRegister = () => {
+const MemberRegisterForm = () => {
 
   const history = useHistory() // 브라우저의 기록이라 생각하면 됨
 
@@ -30,7 +29,7 @@ const MemberRegister = () => {
 
     memberRegister(signupRequest)
     .then(res => {
-      alert(`회원가입 완료 : ${res.data.result}`)
+      alert(`회원가입 완료 : ${JSON.stringify(res.data)}`)
       // alert(`회원가입 완료 : ${res.data}`)
       // history.push('login')
     })
@@ -80,4 +79,4 @@ const MemberRegister = () => {
 </>)
 }
 
-export default MemberRegister
+export default MemberRegisterForm

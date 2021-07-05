@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import {Button} from '@material-ui/core'
+import { MemberMenu as Menu } from 'common'
+import { Nav } from 'common'
 
 const Home = ({children}) => { 
     useEffect(() => {}, [])
@@ -19,14 +21,20 @@ const Home = ({children}) => {
     }
 
     return (<>
-    <table className="tab_lay">
-        <tr><td><h1>홈</h1></td></tr>
-        <tr><td><Button color="primary" onClick={handleClick}>서버 연결 테스트</Button></td></tr>
-        <tr><td> 
-            {connection ?
-            '연결상태 입니다.':
-            '연결상태가 아닙니다.'}
-        </td></tr>
+    <Nav/>
+        <table style={{width: '100%', height: '100%'}}>
+        <tr><td colSpan={2} ><h2 style={{textAlign: 'center'}}>Home</h2></td></tr>
+        <tr>
+            <td style={{width: '25%'}}><Menu/></td>
+            <td style={{width: '75%'}}>
+            <Button color="primary" onClick={handleClick}>1. 서버 연결 테스트</Button>
+                { connection ?
+        '연결상태 입니다.'
+         : 
+        '연결상태가 아닙니다.' 
+         }</td>
+        </tr>
+        
     </table>
     {children}
 </>)}

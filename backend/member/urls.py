@@ -10,4 +10,7 @@ urlpatterns = [
     url(r'^list', views.members),
     url(r'^login', views.member),
     url(r'^modify', views.member),
+    url(r'^detail', views.member),
+    url(r'^delete', views.member_delete),
+    url(r'^retrieve', views.member_ret),
 ]

@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Pagination from '@material-ui/lab/Pagination'
+import { Link } from 'react-router-dom'
 import { memberList } from 'api'
 
 const useStyles = makeStyles({
@@ -15,6 +16,14 @@ const useStyles = makeStyles({
     minWidth: 650,
   },
 });
+
+const usePageStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
 
 const createData_sample = (name, calories, fat, carbs, protein) => {
   return { name, calories, fat, carbs, protein };
@@ -28,8 +37,9 @@ const rows_sample = [
   createData_sample('Gingerbread', 566, 16.0, 49, 3.9),
 ];
 
-const MemberList = () => {
+const MemberListComponent = () => {
     const classes = useStyles();
+    const pageClasses = usePageStyles();
 
     const [members, setMembers] = useState([])
     
@@ -42,6 +52,10 @@ const MemberList = () => {
             console.log(err)
         })
       }, [])
+
+      const handleClick = member => {
+        localStorage.setItem("selectedMember", member)
+      }
     
   return (<>
     <TableContainer component={Paper}>
@@ -85,13 +99,12 @@ const MemberList = () => {
         </TableHead>
         <TableBody>
           {members.length != 0 ?
-          members.map((member) => (
-            <TableRow key={member.username}>
-              <TableCell component="th" scope="member">
-                {member.username}
-              </TableCell>
-              <TableCell align="right">{member.name}</TableCell>
-              <TableCell align="right">{member.email}</TableCell>
+          members.map(({username, password, name, email}) => (
+            <TableRow key={username}>
+              <TableCell align='right'>{username}</TableCell>
+              <TableCell align="right"><Link to={`/member/detail/${ username }`} 
+                onClick={ () => handleClick( JSON.stringify({ username, password, name, email }) )}>{ name }</Link></TableCell>
+              <TableCell align="right">{ email }</TableCell>
             </TableRow>
           )):
                 <h3>등록된 데이터가 없습니다.</h3>
@@ -105,4 +118,4 @@ const MemberList = () => {
   </>);
 }
 
-export default MemberList
+export default MemberListComponent

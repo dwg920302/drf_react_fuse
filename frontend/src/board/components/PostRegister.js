@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {postWrite} from 'api'
-import {Button} from '@material-ui/core'
 
 const PostRegister = () => {
 

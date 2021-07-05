@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
-import {memberModify} from 'api'
+import { memberModify } from 'api'
 
-const MemberModify = () => {
+const MemberModifyForm = () => {
 
     const [userInfo, setUserInfo] = useState({
-        username:'',
+        username: localStorage.getItem("loginedMember"),
         password:'',
         name:'',
         email:''
@@ -42,26 +42,24 @@ const MemberModify = () => {
 
     return (<>
         <div className="modify">
-        <form onSubmit={handleSubmit} method="patch" style={{border:"1px solid #ccc"}}>
+        <form onSubmit={handleSubmit} method="put" style={{border:"1px solid #ccc"}}>
       <div className="container">
-        <h1>Modify</h1>
-        <p>Please fill in this form to change status. (username should exist)</p>
+        <h1>회원정보수정</h1>
+        <p>Please fill in this form to change status.</p>
         <hr/>
-    
-        <label for="username"><b>User ID</b></label>
-        <input type="text" placeholder="Enter ID" onChange={handleChange} name="username" value={username} />
+        <label for="username"><b>ID : {localStorage.getItem("loginedMember")}</b></label>
         <br/>
-        <label for="psw"><b>Password</b></label>
+        <label for="psw"><b>Password Change</b></label>
         <input type="password" placeholder="Enter Password" onChange={handleChange} name="password" value={password} />
         <br/>
-        <label for="name"><b>Name</b></label>
+        <label for="name"><b>Name Change</b></label>
         <input type="text" placeholder="Enter Your Name" onChange={handleChange} name="name" value={name} />
         <br/>
-        <label for="email"><b>Email</b></label>
+        <label for="email"><b>Email Change</b></label>
         <input type="text" placeholder="Enter Email" onChange={handleChange} name="email" value={email} />
         <br/>
         <div class="clearfix">
-          <button type="submit" className="signupbtn">Sign Up</button>
+          <button type="submit" className="signupbtn">Change</button>
           <button type="cancel" onClick={handleCancel} className="cancelbtn">Cancel</button>
         </div>
       </div>
@@ -70,4 +68,4 @@ const MemberModify = () => {
     </>)
 }
 
-export default MemberModify
+export default MemberModifyForm

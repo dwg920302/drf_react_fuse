@@ -3,7 +3,7 @@ import { memberLogin } from 'api'
 import { useHistory } from 'react-router'
 
 
-const MemberLogin = () => {
+const MemberLoginForm = () => {
 
   const history = useHistory()
 
@@ -28,10 +28,12 @@ const MemberLogin = () => {
 
     memberLogin(loginRequest)
     .then(res => {
-      alert(`${res.data.result}`)
+      alert(`${res.data.result}, \nWelcome, ${res.data.username}`)
+      localStorage.setItem("loginedMember", res.data.username)
+      history.push('/home')
     })
     .catch(err => {
-      alert(`로그인 실패 : ${err}`)
+      alert(`로그인 실패 : ${err.result}`)
     })
 
   }
@@ -74,4 +76,4 @@ const MemberLogin = () => {
     </>)
 }
 
-export default MemberLogin
+export default MemberLoginForm
