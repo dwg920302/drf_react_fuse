@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import { memberDelete } from 'api'
+import { useHistory } from 'react-router'
 
 const MemberDeleteForm = () => {
+
+    const history = useHistory()
 
     const [userInfo, setUserInfo] = useState({
         username: localStorage.getItem("loginedMember"),
@@ -17,12 +20,11 @@ const MemberDeleteForm = () => {
 
     const handleSubmit = e => {
       e.preventDefault()
-      alert(JSON.stringify(userInfo))
-      // member.password = password
       memberDelete(userInfo)
       .then(res => {
         alert(`탈퇴 완료 : ${res.data.result} `)
-        // history.push('login')
+        localStorage.setItem("loginedMember", '')
+        history.push('/home')
       })
       .catch(err => {
         alert(`탈퇴 실패 : ${err} `)

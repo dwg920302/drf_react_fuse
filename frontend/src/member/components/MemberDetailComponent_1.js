@@ -1,14 +1,20 @@
 import React, {useEffect, useState} from 'react'
 import { useHistory } from 'react-router'
+import { memberDetail } from 'api'
 
-const MemberDetailComponent = () => {
+const MemberDetailComponent_1 = () => {
 
   const [member, setMember] = useState({})
 
   useEffect(() => {
 
-    setMember(JSON.parse(localStorage.getItem("selectedMember")))
-//    setMember(JSON.parse(localStorage.getItem("loginedMember")))
+    memberDetail(localStorage.getItem("loginedMember")).
+    then(res => {
+        setMember(res.data)
+    }).
+    catch(err => {
+        alert(err)
+    })
   }, {})
 
     return (<>
@@ -31,4 +37,4 @@ const MemberDetailComponent = () => {
     </>)
 }
 
-export default MemberDetailComponent
+export default MemberDetailComponent_1

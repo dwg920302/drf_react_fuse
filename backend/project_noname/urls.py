@@ -16,15 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import url, include
 from django.urls import path
+from common import views
 from rest_framework import routers
-from common.views import Connection
-from rest_framework import routers
+from rest_framework_jwt.views import *
+from rest_framework.permissions import IsAuthenticated
 
 router = routers.DefaultRouter()
 
 urlpatterns = [
-    path('connection', Connection.as_view()),
+    path('connection', views.connection),
     url(r'^api/post/', include('board.urls')),
     url(r'^api/member/', include('member.urls')),
     url(r'^adm/member/', include('member.urls')),
+
+#    url(r'^api-token-auth/$', obtain_jwt_token),
+#    url(r'^api-token-auth/refresh$', refresh_jwt_token),
+#    url(r'^api-token-auth/verify$', verify_jwt_token),
 ]

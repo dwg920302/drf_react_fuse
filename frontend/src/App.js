@@ -5,6 +5,7 @@ import { PostRegister, PostList, PostDelete, PostRetrieve, PostUpdate } from 'bo
 import { Home, Member, Item, Board } from 'templates'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ItemDelete, ItemDetail, ItemList, ItemRegister, ItemRetrieve, ItemModify } from 'item'
+import { MemberDetail_1 } from 'member'
 
 const App = () => {
   return (<div>
@@ -21,6 +22,8 @@ const App = () => {
         <Route exact path='/member/list' component={MemberList}/>
         <Route exact path='/member/delete' component={MemberDelete}/>
         <Route exact path='/member/retrieve' component={MemberRetrieve}/>
+
+        <Route exact path='/member/detail_1/:id' component={MemberDetail_1}/>
 
         <Route exact path='/item' component={Item}/>
         <Route exact path='/item/detail' component={ItemDetail}/>

@@ -3,29 +3,25 @@ import { memberRetrieve } from 'api'
 
 const MemberRetrieveForm = () => {
 
-    const [password, setPassword] = useState({})
+    const [username, setUsername] = useState('')
 
     const handleChange = e => {
-        const {value, name} = e.target
-        setPassword({
-            ...password, [name]: value // key : value (json)
-        })
+        setUsername(e.target.value)
     }
 
     const handleSubmit = e => {
       e.preventDefault()
-      memberRetrieve({password})
+      memberRetrieve(username)
       .then(res => {
-        alert(`탈퇴 완료 : ${res.data.result} `)
+        alert(`검색 완료 : ${res.data.result} `)
         // history.push('login')
       })
       .catch(err => {
-        alert(`탈퇴 실패 : ${err} `)
+        alert(`검색 실패 : ${err} `)
       })
     }
 
     return(<>
-    <h2>회원이름조회</h2>
         <div className="get">
             <form onSubmit={handleSubmit} method="get">
                 <div className="container">
@@ -34,7 +30,7 @@ const MemberRetrieveForm = () => {
                 <br/><br/>
                 <label labelFor="username"><b>ID</b></label>
                 <input type="username" placeholder="Enter ID to search" onChange={handleChange} name="username" required/>
-                <button type="submit" className="searchbtn">확인 (탈퇴)</button>
+                <button type="submit" className="searchbtn">검색</button>
                 </div>
             </form>
         </div>

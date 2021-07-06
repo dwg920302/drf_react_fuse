@@ -11,6 +11,8 @@ urlpatterns = [
     url(r'^login', views.member),
     url(r'^modify', views.member),
     url(r'^detail', views.member),
-    url(r'^delete', views.member_delete),
     url(r'^retrieve', views.member_ret),
+    url(r'^delete', views.member_delete),
+    # path('delete/<slug:pk>', views.member_delete),
+    # path('detail/<slug:pk>', views.member),
 ]

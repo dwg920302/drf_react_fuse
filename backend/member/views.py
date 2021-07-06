@@ -1,8 +1,5 @@
 from django.http.response import JsonResponse
-from rest_framework.response import Response
 from rest_framework import status
-
-from rest_framework import serializers
 from .models import MemberVO
 from .serializers import MemberSerializer
 from rest_framework.decorators import api_view
@@ -39,11 +36,16 @@ def members(request):
 def member(request):
     ic('member')
     if request.method == 'GET':
-        data = request.data['username']
-        ic(data)
-        data = get_object(data)
-        ic(data)
-        return JsonResponse(data, safe=False)
+        pk = request.path.split('/')[-1]
+        ic(pk)
+        try:
+            a_member = MemberVO.objects.get(pk=pk)
+            ic(a_member)
+            serializer = MemberSerializer(a_member)
+            return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+
+        except MemberVO.DoesNotExist:
+            return JsonResponse({'result': '해당 Username이 존재하지 않음'}, status=status.HTTP_402_PAYMENT_REQUIRED)
 
     elif request.method == 'PUT':
         data = request.data['body']
@@ -104,21 +106,17 @@ def member_delete(request):
         return JsonResponse({'result': errcode1}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['PUT'])
+@api_view(['GET'])
 def member_ret(request):
     ic('member_retrieve')
-    if request.method == 'PUT':
-        data = request.data['body']
-        ic(data)
-        [username, password] = [data['username'], data['password']]
+    if request.method == 'GET':
+        pk = request.path.split('/')[-1]
+        ic(pk)
         try:
-            ex_member = MemberVO.objects.get(pk=username)
-            if ex_member.password == password:
-                ex_member.delete()
-                return JsonResponse({'result': '삭제 성공', 'username': username}, status=status.HTTP_200_OK)
+            MemberVO.objects.get(pk=pk)
+            return JsonResponse({'result': '해당 Username이 존재함'}, status=status.HTTP_200_OK)
         except MemberVO.DoesNotExist:
-            return JsonResponse({'result': errcode1}, status=status.HTTP_400_BAD_REQUEST)
-        return JsonResponse({'result': errcode1}, status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse({'result': '해당 Username이 존재하지 않음'}, status=status.HTTP_200_OK)
 
 
 def get_object(pk):

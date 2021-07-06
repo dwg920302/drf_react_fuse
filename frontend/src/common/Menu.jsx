@@ -18,9 +18,9 @@ export const MemberMenu = () => {
             <li><Link to='/member/list'>회원목록</Link></li>
             <li><Link to='/member/retrieve'>회원이름조회</Link></li>
             <li><Link to='/member/detail/:id'>회원정보상세</Link></li>
+            <li><Link to='/member/detail_1/:id'>회원정보상세(임시)</Link></li>
             <li><Link to='/member/modify'>회원정보수정</Link></li>
             <li><Link to='/member/delete'>회원탈퇴(회원정보삭제)</Link></li>
-            
             <li><Link onClick={() => {
                 localStorage.setItem("loginedMember", "")
                 history.push('/home')
